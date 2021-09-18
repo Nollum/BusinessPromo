@@ -4,11 +4,13 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 import 'main.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+
+final storage = new FlutterSecureStorage();
 
 class CreateCode extends StatefulWidget {
 
@@ -98,7 +100,8 @@ class _CreateCode extends State<CreateCode> {
             child: const Text('Submit'),
             onPressed: () async {
               var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/businesses');
-              var response = await http.post(url, body: {'title': 'doodle', 'description': 'blue', 'website': 'blue'});
+              String? value = await storage.read(key: 'jwt');
+              var response = await http.post(url, body: {'title': 'doodle', 'description': 'blue', 'website': 'blue','jwt': value});
               print('Response status: ${response.statusCode}');
               print('Response body: ${response.body}');
 
