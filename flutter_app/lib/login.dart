@@ -3,7 +3,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'main.dart';
 // Create storage
 final storage = new FlutterSecureStorage();
 
@@ -19,14 +19,11 @@ class LoginScreen extends StatelessWidget {
     print('Name: ${data.name}, Password: ${data.password}');
     return Future.delayed(loginTime).then((_) async {
       var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/users/login');
-      var response = await http.post(url, body: {'Name': data.name, 'Pass': data.password});
+      var response = await http.post(url, body: {'email': data.name, 'password': data.password});
       print(response.body);
       //storage.write(key: "key", value: response.body);
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return 'Email and/or password is invalid';
       }
       return "";
     });
@@ -39,10 +36,7 @@ class LoginScreen extends StatelessWidget {
       var response = await http.post(url, body: {'email': data.name, 'password': data.password});
       print(response.body);
       //storage.write(key: "key", value: response.body);
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
+      if (response.statusCode != 200 && response.statusCode != 201) {
         return 'Password does not match';
       }
       return "";
@@ -67,9 +61,9 @@ class LoginScreen extends StatelessWidget {
       onLogin: _authUserSign,
       onSignup: _authUserCreate,
       onSubmitAnimationCompleted: () {
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-        //   builder: (context) => DashboardScreen(),
-        // ));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MyApp(),
+        ));
       },
       onRecoverPassword: _recoverPassword,
     );

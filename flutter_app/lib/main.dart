@@ -5,6 +5,7 @@ import 'scan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'createCode.dart';
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Scan()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),

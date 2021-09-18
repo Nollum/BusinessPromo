@@ -8,7 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class CreateCode extends StatefulWidget {
 
@@ -96,7 +96,12 @@ class _CreateCode extends State<CreateCode> {
           ),
           ElevatedButton(
             child: const Text('Submit'),
-            onPressed: () {
+            onPressed: () async {
+              var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/business');
+              var response = await http.post(url, body: {'title': 'doodle', 'website': 'blue'});
+              print('Response status: ${response.statusCode}');
+              print('Response body: ${response.body}');
+
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) => Scan()),
