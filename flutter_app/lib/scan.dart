@@ -115,7 +115,7 @@ class _BirdState extends State<Scan> {
     // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('no Permission')),
+        SnackBar(content: Text('No Permission')),
       );
     }
   }
