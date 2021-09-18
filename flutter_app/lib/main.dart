@@ -79,16 +79,31 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
+
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image(
+      image: AssetImage('../Graphics/Spur_Logo.png'),
+          ),
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Center(
               child: ElevatedButton(
-                child: const Text('Open route'),
+                child: const Text(
+                    'Scan QR Code',
+                    style: TextStyle(fontSize: 20),
+                ),
+                style: ElevatedButton.styleFrom (
+                  primary: Colors.yellow[700],
+                  onPrimary: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                  fixedSize: Size(200, 70),
+
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -102,7 +117,20 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(32.0),
             child: Center(
               child: ElevatedButton(
-                child: const Text('Open route'),
+                child: const Text(
+                  'Create QR Code',
+                  style: TextStyle(fontSize: 20),
+                ),
+
+                style: ElevatedButton.styleFrom (
+                  primary: Colors.yellow[700],
+                  onPrimary: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                  fixedSize: Size(200, 70),
+
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
