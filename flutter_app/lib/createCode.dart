@@ -97,8 +97,8 @@ class _CreateCode extends State<CreateCode> {
           ElevatedButton(
             child: const Text('Submit'),
             onPressed: () async {
-              var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/business');
-              var response = await http.post(url, body: {'title': 'doodle', 'website': 'blue'});
+              var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/businesses');
+              var response = await http.post(url, body: {'title': 'doodle', 'description': 'blue', 'website': 'blue'});
               print('Response status: ${response.statusCode}');
               print('Response body: ${response.body}');
 
