@@ -7,12 +7,6 @@ import 'main.dart';
 // Create storage
 final storage = new FlutterSecureStorage();
 
-// this must be changed to idk... well figure it out
-const users = const {
-  'dribbble@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
-};
-
 class LoginScreen extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
   Future<String> _authUserSign(LoginData data) {
@@ -21,7 +15,8 @@ class LoginScreen extends StatelessWidget {
       var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/users/login');
       var response = await http.post(url, body: {'email': data.name, 'password': data.password});
       print(response.body);
-      //storage.write(key: "key", value: response.body);
+      final body = json.decode(response.body);
+      storage.write(key: "jwt", value: body['accessJWT']);
       if (response.statusCode != 200 && response.statusCode != 201) {
         return 'Email and/or password is invalid';
       }
@@ -35,19 +30,10 @@ class LoginScreen extends StatelessWidget {
       var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/users/register');
       var response = await http.post(url, body: {'email': data.name, 'password': data.password});
       print(response.body);
-      //storage.write(key: "key", value: response.body);
+      final body = json.decode(response.body);
+      storage.write(key: "jwt", value: body['accessJWT']);
       if (response.statusCode != 200 && response.statusCode != 201) {
         return 'Password does not match';
-      }
-      return "";
-    });
-  }
-
-  Future<String> _recoverPassword(String name) {
-    print('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
       }
       return "";
     });
@@ -64,8 +50,7 @@ class LoginScreen extends StatelessWidget {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => MyApp(),
         ));
-      },
-      onRecoverPassword: _recoverPassword,
+      }, onRecoverPassword: (String ) {  },
     );
   }
 }
