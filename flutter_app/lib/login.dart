@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+// Create storage
+final storage = new FlutterSecureStorage();
 
 // this must be changed to idk... well figure it out
 const users = const {
@@ -13,17 +17,11 @@ class LoginScreen extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
   Future<String> _authUserSign(LoginData data) {
     print('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      Future<http.Response> x = http.post(
-        Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'Name': data.name,
-          'Pass': data.password
-        }),
-      );
+    return Future.delayed(loginTime).then((_) async {
+      var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/users/login');
+      var response = await http.post(url, body: {'Name': data.name, 'Pass': data.password});
+      print(response.body);
+      //storage.write(key: "key", value: response.body);
       if (!users.containsKey(data.name)) {
         return 'User not exists';
       }
@@ -36,17 +34,11 @@ class LoginScreen extends StatelessWidget {
 
   Future<String> _authUserCreate(LoginData data) {
     print('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      Future<http.Response> x = http.post(
-        Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'Name': data.name,
-          'Pass': data.password
-        }),
-      );
+    return Future.delayed(loginTime).then((_) async {
+      var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/users/register');
+      var response = await http.post(url, body: {'email': data.name, 'password': data.password});
+      print(response.body);
+      //storage.write(key: "key", value: response.body);
       if (!users.containsKey(data.name)) {
         return 'User not exists';
       }
