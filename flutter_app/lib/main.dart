@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'createCode.dart';
 import 'login.dart';
 import 'package:get_storage/get_storage.dart';
+import 'promo.dart';
 
 void main() async {
   await GetStorage.init();
+  final box = GetStorage();
   runApp(const MyApp());
 }
 
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.yellow[100],
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -134,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CreateCode()),
+                    MaterialPageRoute(builder: (context) => Promo()),
                   );
                 },
               ),
