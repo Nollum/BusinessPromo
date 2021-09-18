@@ -11,10 +11,12 @@ import 'package:get_storage/get_storage.dart';
 void main() async {
   await GetStorage.init();
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -52,12 +54,27 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+
+  @override
+  void initState() {
+    // super.initState();
+    final box = GetStorage();
+
+    if (box.read("jwt") == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -85,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image(
-      image: AssetImage('../Graphics/Spur_Logo.png'),
+      image: AssetImage('Graphics/Spur_Logo.png'),
           ),
           Padding(
             padding: const EdgeInsets.all(32.0),

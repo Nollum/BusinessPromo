@@ -38,7 +38,8 @@ class _BirdState extends State<Scan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan QR'),
+        backgroundColor: Colors.yellow[700],
+        title: const Text('Scan'),
       ),
       body: Column(
         children: <Widget>[
@@ -60,7 +61,7 @@ class _BirdState extends State<Scan> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
+          borderColor: Colors.yellow,
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -10,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 // final storage = new FlutterSecureStorage();
 final box = GetStorage();
@@ -23,6 +27,19 @@ class CreateCode extends StatefulWidget {
 
 class _CreateCode extends State<CreateCode> {
 
+  final box = GetStorage();
+
+  var qrCode = "";
+
+  @override
+  void initState(){
+    controller1.text = box.read("name");
+    controller2.text = box.read("description");
+    controller3.text = box.read("image");
+    controller4.text = box.read("promoText");
+    controller5.text = box.read("website");
+
+  }
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
@@ -33,12 +50,14 @@ class _CreateCode extends State<CreateCode> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.yellow[700],
         title: const Text('Business Title'),
+        elevation: 0,
       ),
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: controller1,
               decoration: const InputDecoration(
@@ -54,7 +73,7 @@ class _CreateCode extends State<CreateCode> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: controller2,
               decoration: const InputDecoration(
@@ -72,7 +91,7 @@ class _CreateCode extends State<CreateCode> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: controller3,
               decoration: const InputDecoration(
@@ -90,7 +109,7 @@ class _CreateCode extends State<CreateCode> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: controller4,
               decoration: const InputDecoration(
@@ -109,7 +128,7 @@ class _CreateCode extends State<CreateCode> {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: controller5,
               decoration: const InputDecoration(
@@ -127,17 +146,91 @@ class _CreateCode extends State<CreateCode> {
               },
             ),
           ),
+
           ElevatedButton(
-            child: const Text('Submit'),
+            child: const Text('Create QR Code',style: TextStyle(fontSize: 24)),
+            style: ElevatedButton.styleFrom (
+              elevation: 0,
+              primary: Colors.yellow[700],
+              onPrimary: Colors.white,
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              // fixedSize: Size(200, 70),
+
+            ),
+
             onPressed: () async {
               var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/codes');
               // var value = storage.read(key: 'jwt');
               var value = await box.read("jwt");
 
               print(value);
+              box.write("name", controller1.text);
+              box.write("description", controller2.text);
+              box.write("image", controller3.text);
+              box.write("promoText", controller4.text);
+              box.write("website", controller5.text);
+
               var response = await http.post(url, body: {'name': controller1.text, 'description': controller2.text, 'image': controller3.text, 'promoText': controller4.text, 'website': controller5.text,'jwt': value});
               print('Response status: ${response.statusCode}');
               print('Response body: ${response.body}');
+
+              print(response.body);
+              var body = json.decode(response.body);
+              var test3 = (body['code']);
+              // var body3 = json.decode(test3.body);
+
+              qrCode = test3["_id"];
+
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                    // elevation: 16,
+                    child: Container(
+                      height: 400,
+                      child: Column(
+                        children: [
+                          QrImage(
+                            data: qrCode,
+                            // version: QrVersions.auto,
+                            // size: 200.0,
+                            // gapless: false,
+                            // embeddedImage: AssetImage('Graphics/Spur_Logo.png'),
+                            // embeddedImageStyle: QrEmbeddedImageStyle(
+                            //   size: Size(80, 80),
+                            // ),
+
+                          ),
+                          ElevatedButton(
+                            // style: raisedButtonStyle,
+                            style: ElevatedButton.styleFrom (
+                              elevation: 0,
+                              primary: Colors.yellow[700],
+                              onPrimary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0),
+                              ),
+                              // fixedSize: Size(200, 70),
+
+                            ),
+                            onPressed: () {
+                              launch("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrCode}");
+                            },
+                            child: Text('Save',style: TextStyle(fontSize: 24)),
+                          )
+
+                        ],
+                      ),
+
+
+                    ),
+                  );
+                },
+              );
+
               //_id
               // Navigator.push(
               //   context,
