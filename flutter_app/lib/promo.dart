@@ -8,6 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'scan.dart';
 
 class Promo extends StatefulWidget {
 
@@ -22,10 +23,16 @@ class _PromoState extends State<Promo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Business Title'),
+        title:  Text('${Scan.name}'),
+        elevation: 0,
+        backgroundColor: Color(0xffffAf00),
       ),
       body: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.network('${Scan.icon}'),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: RichText(
@@ -37,7 +44,7 @@ class _PromoState extends State<Promo> {
                         fontSize: 12,
                       )),
                   TextSpan(
-                      text: 'Hello, this is a business, we are awesome \n\n\n',
+                      text: '${Scan.description} \n\n\n',
                       style: TextStyle(fontWeight: FontWeight.normal,
                         color: Colors.black,
                         fontSize: 24,
@@ -47,17 +54,17 @@ class _PromoState extends State<Promo> {
                         color: Colors.black,
                         fontSize: 12,
                       )),
-                  TextSpan(text: 'Hello, this is a business, we are awesome \n \n',
+                  TextSpan(text: '${Scan.promo} \n \n',
                       style: TextStyle(fontWeight: FontWeight.normal,
                         color: Colors.black,
                         fontSize: 24,
                       ),
                   ),
                   TextSpan(
-                    text: 'Business Website',
+                    text: 'More Information',
                     style: TextStyle(color:Colors.lightBlue, fontWeight: FontWeight.normal, fontSize: 24, decoration: TextDecoration.underline),
                     recognizer: new TapGestureRecognizer()..onTap = () {
-                      launch("https://www.google.com");
+                      launch("${Scan.website}");
                     },
                   ),
 

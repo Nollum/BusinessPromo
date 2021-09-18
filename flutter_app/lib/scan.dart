@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 import 'main.dart';
@@ -6,8 +7,16 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'promo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+final box = GetStorage();
 
 class Scan extends StatefulWidget {
+  static var name = "";
+  static var description = "";
+  static var icon = "";
+  static var promo = "";
+  static var website = "";
 
 
   @override
@@ -75,10 +84,24 @@ class _BirdState extends State<Scan> {
     });
     controller.scannedDataStream.listen((scanData) async {
       await controller.pauseCamera();
+      var value = await box.read("jwt");
       setState(() {
         result = scanData;
       });
       print(result!.code);
+      var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/codes/${result!.code}');
+      var response = await http.get(url);
+      print(response.body);
+      var body = json.decode(response.body);
+      var test3 = (body['code']);
+      // var body3 = json.decode(test3.body);
+
+      Scan.name =  test3["name"];
+      Scan.description =  test3["description"];
+      Scan.icon = test3["image"];
+      Scan.promo = test3["promoText"];
+      Scan.website = test3["website"];
+      // // print(Scan.name);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Promo()),

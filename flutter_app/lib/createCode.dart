@@ -9,8 +9,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'package:get_storage/get_storage.dart';
 
-final storage = new FlutterSecureStorage();
+// final storage = new FlutterSecureStorage();
+final box = GetStorage();
 
 class CreateCode extends StatefulWidget {
 
@@ -20,6 +22,12 @@ class CreateCode extends StatefulWidget {
 }
 
 class _CreateCode extends State<CreateCode> {
+
+  final controller1 = TextEditingController();
+  final controller2 = TextEditingController();
+  final controller3 = TextEditingController();
+  final controller4 = TextEditingController();
+  final controller5 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,7 @@ class _CreateCode extends State<CreateCode> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
+              controller: controller1,
               decoration: const InputDecoration(
                 icon: Icon(Icons.business_center_outlined),
                 // hintText: 'What do people call you?',
@@ -47,6 +56,7 @@ class _CreateCode extends State<CreateCode> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
+              controller: controller2,
               decoration: const InputDecoration(
                 icon: Icon(Icons.description),
                 // hintText: 'What do people call you?',
@@ -64,10 +74,11 @@ class _CreateCode extends State<CreateCode> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
+              controller: controller3,
               decoration: const InputDecoration(
-                icon: Icon(Icons.attach_money),
+                icon: Icon(Icons.image),
                 // hintText: 'What do people call you?',
-                labelText: 'Business Promotion',
+                labelText: 'Image/icon',
               ),
               onSaved: (String? value) {
                 // This optional block of code can be used to run
@@ -81,6 +92,26 @@ class _CreateCode extends State<CreateCode> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextFormField(
+              controller: controller4,
+              decoration: const InputDecoration(
+                icon: Icon(Icons.attach_money),
+                // hintText: 'What do people call you?',
+                labelText: 'Promotion Text',
+              ),
+              onSaved: (String? value) {
+                // This optional block of code can be used to run
+                // code when the user saves the form.
+              },
+              validator: (String? value) {
+                return (value != "" ? 'Please enter a value' : null);
+              },
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: controller5,
               decoration: const InputDecoration(
                 icon: Icon(Icons.link),
                 // hintText: 'What do people call you?',
@@ -99,12 +130,15 @@ class _CreateCode extends State<CreateCode> {
           ElevatedButton(
             child: const Text('Submit'),
             onPressed: () async {
-              var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/businesses');
-              String? value = await storage.read(key: 'jwt');
-              var response = await http.post(url, body: {'title': 'doodle', 'description': 'blue', 'website': 'blue','jwt': value});
+              var url = Uri.parse('https://frozen-tundra-73649.herokuapp.com/api/codes');
+              // var value = storage.read(key: 'jwt');
+              var value = await box.read("jwt");
+
+              print(value);
+              var response = await http.post(url, body: {'name': controller1.text, 'description': controller2.text, 'image': controller3.text, 'promoText': controller4.text, 'website': controller5.text,'jwt': value});
               print('Response status: ${response.statusCode}');
               print('Response body: ${response.body}');
-
+              //_id
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) => Scan()),
