@@ -4,6 +4,7 @@ import 'dart:io';
 import 'scan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'createCode.dart';
 
 void main() {
   runApp(const MyApp());
@@ -78,16 +79,38 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('First Route'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Open route'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Scan()),
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('Open route'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Scan()),
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Center(
+              child: ElevatedButton(
+                child: const Text('Open route'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateCode()),
+                  );
+                },
+              ),
+            ),
+          ),
+
+        ],
       ),
     );
   }

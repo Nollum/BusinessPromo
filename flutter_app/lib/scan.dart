@@ -3,7 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 import 'main.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
+import 'promo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,25 +28,12 @@ class _BirdState extends State<Scan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Scan QR'),
+      ),
       body: Column(
         children: <Widget>[
           Expanded(flex: 4, child: _buildQrView(context)),
-          // Expanded(
-          //   flex: 1,
-          //   child: FittedBox(
-          //     fit: BoxFit.contain,
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       // children: <Widget>[
-          //       //   if (result != null)
-          //       //     Text(
-          //       //         'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-          //       //   else
-          //       //     Text('Scan a code'),
-          //       // ],
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
@@ -73,15 +60,30 @@ class _BirdState extends State<Scan> {
     );
   }
 
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    }
+    controller!.resumeCamera();
+  }
+
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
+      await controller.pauseCamera();
       setState(() {
         result = scanData;
-        print(describeEnum(result!.format));
       });
+      print(result!.code);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Promo()),
+      );
+
     });
   }
 
