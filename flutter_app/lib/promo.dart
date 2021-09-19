@@ -41,12 +41,23 @@ class _PromoState extends State<Promo> {
       appBar: AppBar(
         title:  Text('${Scan.name}'),
         elevation: 0,
-        backgroundColor: Color(0xffffAf00),
+        backgroundColor: Color(0xfffBC02D),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: <Widget>[
+
+          Container (
+            margin: EdgeInsets.all(10.0),
+            decoration: new BoxDecoration(
+              //borderRadius: new BorderRadius.circular(30.0),
+              //color: Colors.white,
+
+            ),
+
+            child: Image.network('${Scan.icon}'),
+          ),
 
           Container(
             //width: 250,
@@ -63,10 +74,11 @@ class _PromoState extends State<Promo> {
 
               text: TextSpan(
                 children: <TextSpan>[
-                  TextSpan(text: 'Business Description',
+
+                  TextSpan(text: 'Description',
                       style: TextStyle(fontWeight: FontWeight.bold,
                         color: Colors.yellow[700],
-                        fontSize: 18,
+                        fontSize: 25,
                       )),
                   // TextSpan(
                   //     text: '${Scan.description} \n\n\n',
@@ -116,7 +128,7 @@ class _PromoState extends State<Promo> {
                     TextSpan(text: '${Scan.description}',
                         style: TextStyle(fontWeight: FontWeight.normal,
                           color: Colors.black,
-                          fontSize: 13,
+                          fontSize: 15,
                         )),
                   ],
                 ),
@@ -138,7 +150,7 @@ class _PromoState extends State<Promo> {
                     TextSpan(text: 'Promotion',
                         style: TextStyle(fontWeight: FontWeight.bold,
                           color: Colors.yellow[700],
-                          fontSize: 18,
+                          fontSize: 25,
                         )),
                   ],
                 ),
@@ -159,12 +171,29 @@ class _PromoState extends State<Promo> {
                   TextSpan(text: '${Scan.promo}',
                       style: TextStyle(fontWeight: FontWeight.normal,
                         color: Colors.black,
-                        fontSize: 13,
+                        fontSize: 15,
                       )),
                 ],
               ),
             ),
           ),
+
+          // Container (
+          //   margin: EdgeInsets.all(10.0),
+          //   decoration: new BoxDecoration(
+          //     //borderRadius: new BorderRadius.circular(30.0),
+          //     //color: Colors.white,
+          //
+          //   ),
+          //
+          //   child: new InkWell(
+          //       child: new Text('Go to Business Website',
+          //           style: TextStyle(color: Colors.blue[300]),
+          //       ),
+          //       onTap: () => launch('https://google.com')
+          //   ),
+          // ),
+
 
           Container (
             margin: EdgeInsets.all(10.0),
@@ -174,16 +203,44 @@ class _PromoState extends State<Promo> {
 
             ),
 
-            child: new InkWell(
-                child: new Text('Go to Business Website',
-                    style: TextStyle(color: Colors.blue[300]),
-                ),
-                onTap: () => launch('https://google.com')
+            child:RichText(
+              text:TextSpan(
+                children:<TextSpan>[
+                  TextSpan(text: 'Total Visits: ${Scan.scans} ',
+                      style: TextStyle(fontWeight: FontWeight.bold,
+                        color: Colors.yellow[700],
+                        fontSize: 25,
+                      )),
+                ],
+              ),
             ),
+
           ),
 
+          ElevatedButton(
+            child: const Text(
+              'More Info',
+              style: TextStyle(fontSize: 25),
+            ),
 
-            ],
+            style: ElevatedButton.styleFrom (
+              primary: Colors.yellow[700],
+              onPrimary: Colors.white,
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              fixedSize: Size(200, 70),
+
+            ),
+            onPressed: () {
+              if(Scan.website.indexOf("http") >= 0) {
+                print(Scan.website);
+                print("LOL");
+                launch("${Scan.website}");
+              }
+            },
+          ),
+        ],
 
 
 

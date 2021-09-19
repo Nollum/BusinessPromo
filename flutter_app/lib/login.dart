@@ -9,8 +9,6 @@ import 'package:get_storage/get_storage.dart';
 // final storage = new FlutterSecureStorage();
 final box = GetStorage();
 
-
-
 class LoginScreen extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
 
@@ -60,7 +58,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: ("Spur"),
+      title: ("\$pur"),
 
       theme: LoginTheme(
         primaryColor: Colors.yellow[100],

@@ -17,6 +17,7 @@ class Scan extends StatefulWidget {
   static var icon = "";
   static var promo = "";
   static var website = "";
+  static var scans = 124;
 
 
   @override
@@ -102,6 +103,8 @@ class _BirdState extends State<Scan> {
       Scan.icon = test3["image"];
       Scan.promo = test3["promoText"];
       Scan.website = test3["website"];
+      Scan.scans = test3["scanCounter"];
+
       // // print(Scan.name);
       Navigator.push(
         context,

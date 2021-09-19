@@ -93,78 +93,27 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),
       pages: [
         PageViewModel(
-          title: "Fractional shares",
+          title: "Get started: Register an account",
           body:
-          "Instead of having to buy an entire share, invest any amount you want.",
+          "Join the fun, free of charge!",
           image: _buildImage('img1.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Learn as you go",
+          title: "Promote yourself: Create a QR code!",
           body:
-          "Download the Stockpile app and master the market with our mini-lesson.",
+          "Other \$pur users can find your QR code and view what you're offering!",
           image: _buildImage('img2.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Kids and teens",
+          title: "Find local gems: Scan \$pur QR codes",
           body:
-          "Kids and teens can track their stocks 24/7 and place trades that you approve.",
+          "By scanning a code, you can see what others are offering in your community.",
           image: _buildImage('img3.jpg'),
           decoration: pageDecoration,
         ),
-        PageViewModel(
-          title: "Full Screen Page",
-          body:
-          "Pages can be full screen as well.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id euismod lectus, non tempor felis. Nam rutrum rhoncus est ac venenatis.",
-          image: _buildFullscrenImage(),
-          decoration: pageDecoration.copyWith(
-            contentMargin: const EdgeInsets.symmetric(horizontal: 16),
-            fullScreen: true,
-            bodyFlex: 2,
-            imageFlex: 3,
-          ),
-        ),
-        PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
-          image: _buildImage('img2.jpg'),
-          footer: ElevatedButton(
-            onPressed: () {
-              introKey.currentState?.animateScroll(0);
-            },
-            child: const Text(
-              'FooButton',
-              style: TextStyle(color: Colors.white),
-            ),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-          ),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Title of last page - reversed",
-          bodyWidget: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
-            ],
-          ),
-          decoration: pageDecoration.copyWith(
-            bodyFlex: 2,
-            imageFlex: 4,
-            bodyAlignment: Alignment.bottomCenter,
-            imageAlignment: Alignment.topCenter,
-          ),
-          image: _buildImage('img1.jpg'),
-          reverse: true,
-        ),
+
       ],
       onDone: () => _onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback

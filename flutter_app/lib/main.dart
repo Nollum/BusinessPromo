@@ -8,6 +8,7 @@ import 'createCode.dart';
 import 'login.dart';
 import 'package:get_storage/get_storage.dart';
 import 'promo.dart';
+import 'introduction.dart';
 
 void main() async {
   await GetStorage.init();
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (box.read("jwt") == null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => App()),
       );
     }
   }
@@ -156,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Promo()),
+                    MaterialPageRoute(builder: (context) => CreateCode()),
                   );
                 },
               ),

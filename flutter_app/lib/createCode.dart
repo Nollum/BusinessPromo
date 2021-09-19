@@ -33,11 +33,12 @@ class _CreateCode extends State<CreateCode> {
 
   @override
   void initState(){
-    controller1.text = box.read("name");
-    controller2.text = box.read("description");
-    controller3.text = box.read("image");
-    controller4.text = box.read("promoText");
-    controller5.text = box.read("website");
+
+    controller1.text = box.read("name") ?? "";
+    controller2.text = box.read("description") ?? "";
+    controller3.text = box.read("image") ?? "" ;
+    controller4.text = box.read("promoText") ?? "";
+    controller5.text = box.read("website") ?? "";
 
   }
   final controller1 = TextEditingController();
@@ -51,7 +52,7 @@ class _CreateCode extends State<CreateCode> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow[700],
-        title: const Text('Business Title'),
+        title: const Text('Create QR Code'),
         elevation: 0,
       ),
       body: Column(
@@ -63,7 +64,7 @@ class _CreateCode extends State<CreateCode> {
               decoration: const InputDecoration(
                 icon: Icon(Icons.business_center_outlined),
                 // hintText: 'What do people call you?',
-                labelText: 'Business Name',
+                labelText: 'Title',
               ),
               validator: (password) {
                 if (false) return null;
@@ -79,7 +80,7 @@ class _CreateCode extends State<CreateCode> {
               decoration: const InputDecoration(
                 icon: Icon(Icons.description),
                 // hintText: 'What do people call you?',
-                labelText: 'Business Description',
+                labelText: 'Description',
               ),
               onSaved: (String? value) {
                 // This optional block of code can be used to run
@@ -134,7 +135,7 @@ class _CreateCode extends State<CreateCode> {
               decoration: const InputDecoration(
                 icon: Icon(Icons.link),
                 // hintText: 'What do people call you?',
-                labelText: 'Business Website',
+                labelText: 'Website',
               ),
               onSaved: (String? value) {
                 // This optional block of code can be used to run
