@@ -9,5 +9,7 @@ Spur uses QR codes to generate and display information regarding local businesse
 
 # Referenced code
 https://pub.dev/packages/introduction_screen
+
 https://pub.dev/packages/http
+
 https://pub.dev/packages/flutter_login
